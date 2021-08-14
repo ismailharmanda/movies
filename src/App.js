@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -7,10 +7,12 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  async function fetchMoviesHandler() {
+  const fetchMoviesHandler = useCallback(async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("https://swapi.dev/api/films");
+      const response = await fetch(
+        "https://movie-http-b527b-default-rtdb.europe-west1.firebasedatabase.app/movies.json"
+      );
       if (!response.ok) {
         throw new Error("Olağan üstü başarısızlıklar söz konusu.");
       }
@@ -28,7 +30,10 @@ function App() {
     } catch (err) {
       setError(err.message);
     }
-  }
+  }, []);
+  useEffect(() => {
+    fetchMoviesHandler();
+  }, [fetchMoviesHandler]);
   return (
     <React.Fragment>
       <section>
