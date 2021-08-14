@@ -10,7 +10,7 @@ function App() {
   async function fetchMoviesHandler() {
     try {
       setIsLoading(true);
-      const response = await fetch("https://swapi.dev/api/filmss");
+      const response = await fetch("https://swapi.dev/api/films");
       if (!response.ok) {
         throw new Error("Olağan üstü başarısızlıklar söz konusu.");
       }
